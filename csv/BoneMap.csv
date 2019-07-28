@@ -1,0 +1,133 @@
+No,PMX,PMX_en,Humanoid,VRM,Level
+1,操作中心,-,-,-,0
+2,全ての親,master,RootBone,root,0
+3,センター,center,-,-,0
+4,センター先,-,-,-,0
+5,グルーブ,-,-,-,0
+6,腰,waist,-,-,0
+7,上半身,upper body,Spine,spine,0
+8,上半身2,upper body2,Chest,chest,0
+9,上半身先,-,-,-,0
+10,下半身,lower body,Hips,hips,0
+11,下半身2,lower body2,-,-,0
+12,下半身先,-,-,-,0
+13,首,Neck,Neck,neck,0
+14,頭,head,Head,head,0
+15,頭先,Head_Tip,Head_Tip,-,0
+16,両目,eyes,Eyes,-,0
+17,両目先,Eyes_Tip,Eyes_Tip,-,0
+18,左目,eye_L,EyeLeft,leftEye,0
+19,左目先,EyeLeft_Tip,EyeLeft_Tip,-,0
+20,右目,eye_R,EyeRight,rightEye,0
+21,右目先,EyeRight_Tip,EyeRight_Tip,-,0
+22,口,jaw,-,jaw,0
+23,左肩,shoulder_L,Shoulder.L,leftShoulder,0
+24,左鎖骨,Collarbone_L,Collarbone.L,-,0
+25,左鎖骨先,Collarbone_Tip_L,Collarbone_.L,-,0
+26,左鎖骨D先,Collarbone_D_L,Collarbone_Tip.L,-,0
+27,左鎖骨ＩＫ,Collarbone IK_L,Collarbone_IK.L,-,0
+28,左腕,Upper Arm_L,Upper Arm.L,leftUpperArm,0
+29,左腕捩,arm twist_L,Upper Arm twist.L,-,0
+30,左腕捩先,Upper Arm twist_Tip_L,Upper Arm twist_Tip.L,-,0
+31,左腕捩1,Upper Arm twist1_L,Upper Arm twist1.L,-,0
+32,左腕捩2,Upper Arm twist2_L,Upper Arm twist2.L,-,0
+33,左腕捩3,Upper Arm twist3_L,Upper Arm twist3.L,-,0
+34,左ひじ,Lower Arm_L,Lower Arm.L,leftLowerArm,0
+35,左手捩,wrist twist_L,Lower Arm twist.L,-,0
+36,左手捩先,Lower Arm twist_Tip_L,Lower Arm twist_Tip.L,-,0
+37,左手捩1,Lower Arm twist1_L,Lower Arm twist1.L,-,0
+38,左手捩2,Lower Arm twist2_L,Lower Arm twist2.L,-,0
+39,左手捩3,Lower Arm twist3_L,Lower Arm twist3.L,-,0
+40,左手首,Hand_L,Hand.L,leftHand,0
+41,左手先,wrist_Tip_L,Hand_Tip.L,-,0
+42,左親指０,Thumb Proximal_L,Thumb Proximal.L,leftThumbProximal,0
+43,左親指１,Thumb Intermediate_L,Thumb Intermediate.L,leftThumbIntermediate,0
+44,左親指２,Thumb Distal_L,Thumb Distal.L,leftThumbDistal,0
+45,左親指先,thumb_Tip_L,Thumb End.L,-,0
+46,左人指０,Index Root_L,Index Root.L,-,0
+47,左人指１,Index Proximal_L,Index Proximal.L,leftIndexProximal,0
+48,左人指２,Index Intermediate_L,Index Intermediate.L,leftIndexIntermediate,0
+49,左人指３,Index Distal_L,Index Distal.L,leftIndexDistal,0
+50,左人差指先,fore_Tip_L,Index End.L,-,0
+51,左中指０,Middle Root_L,Middle Root.L,-,0
+52,左中指１,Middle Proximal_L,Middle Proximal.L,leftMiddleProximal,0
+53,左中指２,Middle Intermediate_L,Middle Intermediate.L,leftMiddleIntermediate,0
+54,左中指３,Middle Distal_L,Middle Distal.L,leftMiddleDistal,0
+55,左中指先,middle_Tip_L,Middle End.L,-,0
+56,左薬指０,Ring Root_L,Ring Root.L,-,0
+57,左薬指１,Ring Proximal_L,Ring Proximal.L,leftRingProximal,0
+58,左薬指２,Ring Intermediate_L,Ring Intermediate.L,leftRingIntermediate,0
+59,左薬指３,Ring Distal_L,Ring Distal.L,leftRingDistal,0
+60,左薬指先,third_Tip_L,Ring End.L,-,0
+61,左小指０,Little Root_L,Little Root.L,-,0
+62,左小指１,Little Proximal_L,Little Proximal.L,leftLittleProximal,0
+63,左小指２,Little Intermediate_L,Little Intermediate.L,leftLittleIntermediate,0
+64,左小指３,Little Distal_L,Little Distal.L,leftLittleDistal,0
+65,左小指先,Little End_L,Little End.L,-,0
+66,右肩,shoulder_R,Shoulder.R,rightShoulder,0
+67,右鎖骨,Collarbone_R,Collarbone.R,-,0
+68,右鎖骨先,Collarbone_Tip_R,Collarbone_.R,-,0
+69,右鎖骨D先,Collarbone_D_R,Collarbone_Tip.R,-,0
+70,右鎖骨ＩＫ,Collarbone IK_R,Collarbone_IK.R,-,0
+71,右腕,Upper Arm_R,Upper Arm.R,rightUpperArm,0
+72,右腕捩,arm twist_R,Upper Arm twist.R,-,0
+73,右腕捩先,Upper Arm twist_Tip_R,Upper Arm twist_Tip.R,-,0
+74,右腕捩1,Upper Arm twist1_R,Upper Arm twist1.R,-,0
+75,右腕捩2,Upper Arm twist2_R,Upper Arm twist2.R,-,0
+76,右腕捩3,Upper Arm twist3_R,Upper Arm twist3.R,-,0
+77,右ひじ,Lower Arm_R,Lower Arm.R,rightLowerArm,0
+78,右手捩,wrist twist_R,Lower Arm twist.R,-,0
+79,右手捩先,Lower Arm twist_Tip_R,Lower Arm twist_Tip.R,-,0
+80,右手捩1,Lower Arm twist1_R,Lower Arm twist1.R,-,0
+81,右手捩2,Lower Arm twist2_R,Lower Arm twist2.R,-,0
+82,右手捩3,Lower Arm twist3_R,Lower Arm twist3.R,-,0
+83,右手首,Hand_R,Hand.R,rightHand,0
+84,右手先,wrist_Tip_R,Hand_Tip.R,-,0
+85,右親指０,Thumb Proximal_R,Thumb Proximal.R,rightThumbProximal,0
+86,右親指１,Thumb Intermediate_R,Thumb Intermediate.R,rightThumbIntermediate,0
+87,右親指２,Thumb Distal_R,Thumb Distal.R,rightThumbDistal,0
+88,右親指先,thumb_Tip_R,Thumb End.R,-,0
+89,右人指０,Index Root_R,Index Root.R,-,0
+90,右人指１,Index Proximal_R,Index Proximal.R,rightIndexProximal,0
+91,右人指２,Index Intermediate_R,Index Intermediate.R,rightIndexIntermediate,0
+92,右人指３,Index Distal_R,Index Distal.R,rightIndexDistal,0
+93,右人差指先,fore_Tip_R,Index End.R,-,0
+94,右中指０,Middle Root_R,Middle Root.R,-,0
+95,右中指１,Middle Proximal_R,Middle Proximal.R,rightMiddleProximal,0
+96,右中指２,Middle Intermediate_R,Middle Intermediate.R,rightMiddleIntermediate,0
+97,右中指３,Middle Distal_R,Middle Distal.R,rightMiddleDistal,0
+98,右中指先,middle_Tip_R,Middle End.R,-,0
+99,右薬指０,Ring Root_R,Ring Root.R,-,0
+100,右薬指１,Ring Proximal_R,Ring Proximal.R,rightRingProximal,0
+101,右薬指２,Ring Intermediate_R,Ring Intermediate.R,rightRingIntermediate,0
+102,右薬指３,Ring Distal_R,Ring Distal.R,rightRingDistal,0
+103,右薬指先,third_Tip_R,Ring End.R,-,0
+104,右小指０,Little Root_R,Little Root.R,-,0
+105,右小指１,Little Proximal_R,Little Proximal.R,rightLittleProximal,0
+106,右小指２,Little Intermediate_R,Little Intermediate.R,rightLittleIntermediate,0
+107,右小指３,Little Distal_R,Little Distal.R,rightLittleDistal,0
+108,右小指先,Little End_R,Little End.R,-,0
+109,左足ＩＫ,leg IK_L,Leg IK.L,-,0
+110,左足ＩＫ先,Leg IK_Tip_L,Leg IK_Tip.L,-,0
+111,左足,leg_L,Upper Leg.L,leftUpperLeg,0
+112,左ひざ,Lower Leg_L,Lower Leg.L,leftLowerLeg,0
+113,左足首,Foot_L,Foot.L,leftFoot,0
+114,左つま先,Toe_Tip_L,Toe_Tip.L,leftToes,1
+115,左つま先ＩＫ,toe IK_L,Toe IK.L,-,1
+116,左つま先ＩＫ先,Toe IK_Tip_L,Toe IK_Tip.L,-,1
+117,左足D,leg_D_L,-,-,1
+118,左ひざD,knee_D_L,-,-,1
+119,左足首D,ankle_D_L,-,-,1
+120,左足先EX,toe2_L,Toe.L,-,1
+121,右足ＩＫ,leg IK_R,Leg IK.R,-,0
+122,右足ＩＫ先,Leg IK_Tip_R,Leg IK_Tip.R,-,0
+123,右足,leg_R,Upper Leg.R,rightUpperLeg,0
+124,右ひざ,Lower Leg_R,Lower Leg.R,rightLowerLeg,0
+125,右足首,Foot_R,Foot.R,rightFoot,0
+126,右つま先,Toe_Tip_R,Toe_Tip.R,rightToes,1
+127,右つま先ＩＫ,toe IK_R,Toe IK.R,-,1
+128,右つま先ＩＫ先,Toe IK_Tip_R,Toe IK_Tip.R,-,1
+129,右足D,leg_D_R,-,-,1
+130,右ひざD,knee_D_R,-,-,1
+131,右足首D,ankle_D_R,-,-,1
+132,右足先EX,toe2_R,Toe.R,-,1

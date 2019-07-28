@@ -1,0 +1,44 @@
+No,Type(0:system use 1:eyebrows 2:eyes 3:lip 4:etc),PMX,PMX_en
+1,1,真面目,serious
+2,1,困る,sadness
+3,1,にこり,cheerful
+4,1,怒り,anger
+5,1,上,go up
+6,1,下,go down
+7,2,まばたき,blink
+8,2,笑い,smile
+9,2,ウィンク,wink
+10,2,ウィンク２,wink2
+11,2,ウィンク左,wink
+12,2,ウィンク２左,wink2
+13,2,ウィンク右,wink_R
+14,2,ウィンク２右,wink2_R
+15,2,見開き,surprise
+16,2,きりっ,serious
+17,2,目頭上げ,up corners
+18,2,はぅ,close><
+19,2,なごみ,calm
+20,2,びっくり,surprise
+21,2,じと目,doubt
+22,2,なぬ！,confuse
+23,2,瞳小,pupil
+24,2,ｺｯﾁﾐﾃ,see here
+25,2,ｺｯﾁﾐﾝﾅ,see here
+26,3,あ,a
+27,3,い,i
+28,3,う,u
+29,3,え,e
+30,3,お,o
+31,3,ん,n
+32,3,ワ,smile
+33,3,△,triangle
+34,3,▲,triangle
+35,3,∧,regret
+36,3,ω,omega
+37,3,ω□,omegabox
+38,3,はんっ！,fool
+39,3,ぺろっ,tongue
+40,3,えー,e-
+41,3,にやり,grin
+42,3,口角上げ,up corners
+43,3,口角下げ,down corners
