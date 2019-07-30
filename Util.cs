@@ -26,7 +26,7 @@ namespace PMXEP536
                 int.Parse(num_str);
                 return true;
             }
-            catch (FormatException e)
+            catch (FormatException)
             {
                 return false;
             }

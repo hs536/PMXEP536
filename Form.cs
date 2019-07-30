@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
-using System.Windows.Forms;
 using PEPlugin;
 using PEPlugin.Form;
 using PEPlugin.Pmd;
@@ -180,6 +179,7 @@ namespace PMXEP536{
                         bone.Name = new_name;
                         bone.NameE = name.Replace(".R", "_R");
                     }
+                    name = bone.Name;
                     if (name.Contains("_Tip")) {
                         string new_name = name.Replace("_Tip", "先");
                         _console.debug(new StringBuilder().Append("rename:").Append(bone.Name).Append("->").Append(new_name).ToString());
@@ -189,16 +189,63 @@ namespace PMXEP536{
                 }
             }
 			_console.debug("名前の変換 完了");
+
 			//下半身ボーンの修正
 			model_object.addBoneIfNotExists("下半身");
 			IPXBone LowerBody = model_object.getBoneByName("下半身");
 			model_object.addBoneIfNotExists("上半身");
 			IPXBone UpperBody = model_object.getBoneByName("上半身");
-
 			LowerBody.Parent = UpperBody;
 			LowerBody.Position = UpperBody.Position.Clone();
 			LowerBody.ToOffset = new V3(0.0f,-1.0f,0.0f);
 			_console.debug("Hips->下半身変換 完了");
+
+            //つま先ボーン
+            foreach (string str in LR) {
+                IPXBone UpperLeg = model_object.getBoneByName(str + "足");
+                IPXBone LowerLeg = model_object.getBoneByName(str + "ひざ");
+                IPXBone Foot = model_object.getBoneByName(str + "足首");
+                IPXBone Toe = model_object.getBoneByName(str + "つま先");
+                IPXBone Toe_Ex = model_object.getBoneByName(str + "足先EX");
+                IPXBone LegIK = model_object.getBoneByName(str + "足ＩＫ");
+                IPXBone ToeIK = model_object.getBoneByName(str + "つま先ＩＫ");
+
+                IPXBone UpperLeg_D = (IPXBone)UpperLeg.Clone();
+                UpperLeg_D.Name = str + "足D";
+                UpperLeg_D.NameE += "_D";
+                UpperLeg_D.AppendParent = UpperLeg;
+                UpperLeg_D.AppendRatio = 1.0f;
+                UpperLeg_D.IsAppendRotation = true;
+                UpperLeg_D.Visible = false;
+                UpperLeg_D.Level = 1;
+                IPXBone LowerLeg_D = (IPXBone)LowerLeg.Clone();
+                LowerLeg_D.Name = str + "ひざD";
+                LowerLeg_D.NameE += "_D";
+                LowerLeg_D.AppendParent = LowerLeg;
+                LowerLeg_D.AppendRatio = 1.0f;
+                LowerLeg_D.IsAppendRotation = true;
+                LowerLeg_D.Visible = false;
+                LowerLeg_D.Level = 1;
+                IPXBone Foot_D = (IPXBone)Foot.Clone();
+                Foot_D.Name = str + "足首D";
+                Foot_D.NameE += "_D";
+                Foot_D.AppendParent = Foot;
+                Foot_D.AppendRatio = 1.0f;
+                Foot_D.IsAppendRotation = true;
+                Foot_D.Visible = false;
+                Foot_D.Level = 1;
+
+                int index = model_object.bones.IndexOf(Toe_Ex);
+                model_object.bones.Insert(index, UpperLeg_D);
+                model_object.bones.Insert(index, LowerLeg_D);
+                model_object.bones.Insert(index, Foot_D);
+                Toe_Ex.Parent = Foot_D;
+                Toe_Ex.ToOffset = new V3(0.0f, 0.0f, -1.0f);
+                Toe_Ex.Level = 1;
+
+                Toe.Parent = Foot;
+                Foot.ToBone = Toe;
+            }
 		}
 
         private void run_bone_add_stdbone(ModelObject model_object)
@@ -272,14 +319,15 @@ namespace PMXEP536{
             //sort
             IList<IPXBone> bones = model_object.bones;
             IList<IPXBone> sorted = model_object.bones.OrderBy(x => x.Name).ToArray();
-            foreach(IPXBone bone in sorted)
+
+            foreach (IPXBone bone in sorted)
             {
 //                _console.debug("bones.Add:" + bone.Name);
                 bones.Add(bone);
                 bones.RemoveAt(0);
             }
             //re-rename
-            foreach (IPXBone bone in model_object.bones)
+            foreach (IPXBone bone in bones)
             {
                 bone.Name = bone.Name.Substring(5);
             }
@@ -307,6 +355,7 @@ namespace PMXEP536{
         {
             model_object.addBoneIfNotExists("両目");
             IPXBone Eyes = model_object.getBoneByName("両目");
+            Eyes.Parent = model_object.getBoneByName("頭");
             Eyes.Position = new V3(0.0f, 21.0f, -0.7f);
             Eyes.ToOffset = new V3(0.0f, 0.0f, -0.5f);
 
