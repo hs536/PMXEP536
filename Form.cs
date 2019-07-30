@@ -182,7 +182,18 @@ namespace PMXEP536{
                     }
                 }
             }
-        }
+			_console.debug("名前の変換 完了");
+			//下半身ボーンの修正
+			model_object.addBoneIfNotExists("下半身");
+			IPXBone LowerBody = model_object.getBoneByName("下半身");
+			model_object.addBoneIfNotExists("上半身");
+			IPXBone UpperBody = model_object.getBoneByName("上半身");
+
+			LowerBody.Parent = UpperBody;
+			LowerBody.Position = UpperBody.Position.Clone();
+			LowerBody.ToOffset = new V3(0.0f,-1.0f,0.0f);
+			_console.debug("Hips->下半身変換 完了");
+		}
 
         private void run_bone_add_stdbone(ModelObject model_object)
         {
@@ -326,19 +337,19 @@ namespace PMXEP536{
                 LegIK.IK.LoopCount = 40;
                 LegIK.IK.Angle = Util.CalcToRadian(114.5916f);
                 LegIK.IK.Links.Clear();
-                
-                IPXIKLink UpperLegIKLink = (IPXIKLink)PEStaticBuilder.Pmx.IKLink();
-                UpperLegIKLink.Bone = UpperLeg;
-                UpperLegIKLink.IsLimit = true;
-                UpperLegIKLink.Low  = new V3(
-                    Util.CalcToRadian(-180.0f), 0.0f, 0.0f);
-                UpperLegIKLink.High = new V3(
-                    Util.CalcToRadian(-0.5f), 0.0f, 0.0f);
-                LegIK.IK.Links.Add(UpperLegIKLink);
 
-                IPXIKLink LowerLegIKLink = (IPXIKLink)PEStaticBuilder.Pmx.IKLink();
-                LowerLegIKLink.Bone = LowerLeg;
-                LegIK.IK.Links.Add(LowerLegIKLink);
+				IPXIKLink LowerLegIKLink = (IPXIKLink)PEStaticBuilder.Pmx.IKLink();
+				LowerLegIKLink.Bone = LowerLeg;
+				LowerLegIKLink.IsLimit = true;
+				LowerLegIKLink.Low = new V3(
+					Util.CalcToRadian(-180.0f), 0.0f, 0.0f);
+				LowerLegIKLink.High = new V3(
+					Util.CalcToRadian(-0.5f), 0.0f, 0.0f);
+				LegIK.IK.Links.Add(LowerLegIKLink);
+
+				IPXIKLink UpperLegIKLink = (IPXIKLink)PEStaticBuilder.Pmx.IKLink();
+                UpperLegIKLink.Bone = UpperLeg;
+                LegIK.IK.Links.Add(UpperLegIKLink);
                 _console.debug(str+"足IK設定完了");
 
                 ToeIK.Position = Toe.Position.Clone();
