@@ -173,12 +173,18 @@ namespace PMXEP536{
                         bone.Name = new_name;
                         bone.NameE = name.Replace(".L", "_L");
                     }
-                    if (name.Contains(".R"))
+                    else if (name.Contains(".R"))
                     {
                         string new_name = "右" + name.Replace(".R", "");
                         _console.debug(new StringBuilder().Append("rename:").Append(bone.Name).Append("->").Append(new_name).ToString());
                         bone.Name = new_name;
                         bone.NameE = name.Replace(".R", "_R");
+                    }
+                    if (name.Contains("_Tip")) {
+                        string new_name = name.Replace("_Tip", "先");
+                        _console.debug(new StringBuilder().Append("rename:").Append(bone.Name).Append("->").Append(new_name).ToString());
+                        bone.Name = new_name;
+                        bone.NameE = name.Replace("_Tip", "_Tip");
                     }
                 }
             }
