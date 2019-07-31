@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
-using System.Windows.Forms;
 using PEPlugin;
 using PEPlugin.Form;
 using PEPlugin.Pmd;
@@ -111,6 +110,15 @@ namespace PMXEP536{
                     this.bone_sort.Checked = false;
                     _console.info("完了：" + proc_name);
                 }
+				if (this.bone_setup_view.Checked)
+				{
+					string proc_name = this.bone_setup_view.Text;
+					_console.info("開始：" + proc_name);
+					run_bone_setup_view(model_object);
+					this.bone_setup_view.Checked = false;
+					_console.info("完了：" + proc_name);
+
+				}
                 //■モーフ
                 if (this.mo_setup_view.Checked)
                 {
@@ -173,16 +181,81 @@ namespace PMXEP536{
                         bone.Name = new_name;
                         bone.NameE = name.Replace(".L", "_L");
                     }
-                    if (name.Contains(".R"))
+                    else if (name.Contains(".R"))
                     {
                         string new_name = "右" + name.Replace(".R", "");
                         _console.debug(new StringBuilder().Append("rename:").Append(bone.Name).Append("->").Append(new_name).ToString());
                         bone.Name = new_name;
                         bone.NameE = name.Replace(".R", "_R");
                     }
+                    name = bone.Name;
+                    if (name.Contains("_Tip")) {
+                        string new_name = name.Replace("_Tip", "先");
+                        _console.debug(new StringBuilder().Append("rename:").Append(bone.Name).Append("->").Append(new_name).ToString());
+                        bone.Name = new_name;
+                        bone.NameE = name.Replace("_Tip", "_Tip");
+                    }
                 }
             }
-        }
+			_console.debug("名前の変換 完了");
+
+			//下半身ボーンの修正
+			model_object.addBoneIfNotExists("下半身");
+			IPXBone LowerBody = model_object.getBoneByName("下半身");
+			model_object.addBoneIfNotExists("上半身");
+			IPXBone UpperBody = model_object.getBoneByName("上半身");
+			LowerBody.Parent = UpperBody;
+			LowerBody.Position = UpperBody.Position.Clone();
+			LowerBody.ToOffset = new V3(0.0f,-1.0f,0.0f);
+			_console.debug("Hips->下半身変換 完了");
+
+            //つま先ボーン
+            foreach (string str in LR) {
+                IPXBone UpperLeg = model_object.getBoneByName(str + "足");
+                IPXBone LowerLeg = model_object.getBoneByName(str + "ひざ");
+                IPXBone Foot = model_object.getBoneByName(str + "足首");
+                IPXBone Toe = model_object.getBoneByName(str + "つま先");
+                IPXBone Toe_Ex = model_object.getBoneByName(str + "足先EX");
+                IPXBone LegIK = model_object.getBoneByName(str + "足ＩＫ");
+                IPXBone ToeIK = model_object.getBoneByName(str + "つま先ＩＫ");
+
+                IPXBone UpperLeg_D = (IPXBone)UpperLeg.Clone();
+                UpperLeg_D.Name = str + "足D";
+                UpperLeg_D.NameE += "_D";
+                UpperLeg_D.AppendParent = UpperLeg;
+                UpperLeg_D.AppendRatio = 1.0f;
+                UpperLeg_D.IsAppendRotation = true;
+                UpperLeg_D.Visible = false;
+                UpperLeg_D.Level = 1;
+                IPXBone LowerLeg_D = (IPXBone)LowerLeg.Clone();
+                LowerLeg_D.Name = str + "ひざD";
+                LowerLeg_D.NameE += "_D";
+                LowerLeg_D.AppendParent = LowerLeg;
+                LowerLeg_D.AppendRatio = 1.0f;
+                LowerLeg_D.IsAppendRotation = true;
+                LowerLeg_D.Visible = false;
+                LowerLeg_D.Level = 1;
+                IPXBone Foot_D = (IPXBone)Foot.Clone();
+                Foot_D.Name = str + "足首D";
+                Foot_D.NameE += "_D";
+                Foot_D.AppendParent = Foot;
+                Foot_D.AppendRatio = 1.0f;
+                Foot_D.IsAppendRotation = true;
+                Foot_D.Visible = false;
+                Foot_D.Level = 1;
+
+                int index = model_object.bones.IndexOf(Toe_Ex);
+                model_object.bones.Insert(index, UpperLeg_D);
+                model_object.bones.Insert(index, LowerLeg_D);
+                model_object.bones.Insert(index, Foot_D);
+                Toe_Ex.Parent = Foot_D;
+                Toe_Ex.ToOffset = new V3(0.0f, 0.0f, -1.0f);
+                Toe_Ex.Level = 1;
+
+                Toe.Parent = Foot;
+                Foot.ToBone = Toe;
+            }
+		}
 
         private void run_bone_add_stdbone(ModelObject model_object)
         {
@@ -255,20 +328,64 @@ namespace PMXEP536{
             //sort
             IList<IPXBone> bones = model_object.bones;
             IList<IPXBone> sorted = model_object.bones.OrderBy(x => x.Name).ToArray();
-            foreach(IPXBone bone in sorted)
+
+            foreach (IPXBone bone in sorted)
             {
 //                _console.debug("bones.Add:" + bone.Name);
                 bones.Add(bone);
                 bones.RemoveAt(0);
             }
             //re-rename
-            foreach (IPXBone bone in model_object.bones)
+            foreach (IPXBone bone in bones)
             {
                 bone.Name = bone.Name.Substring(5);
             }
         }
 
-        private void run_mat_default_setting(ModelObject model_object)
+		private void run_bone_setup_view(ModelObject model_object)
+		{
+			IList<IPXNode> nodes = model_object.nodes_bone;
+			nodes.Clear();
+			IPXNode Center = PEStaticBuilder.Pmx.Node();
+			Center.Name = "センター";
+			Center.NameE = "Center";
+			IPXNode IK = PEStaticBuilder.Pmx.Node();
+			IK.Name = "IK";
+			IK.NameE = "IK";
+			IPXNode UpperBody = PEStaticBuilder.Pmx.Node();
+			UpperBody.Name = "体(上)";
+			UpperBody.NameE = "UpperBody";
+			IPXNode Hair = PEStaticBuilder.Pmx.Node();
+			Hair.Name = "髪";
+			Hair.NameE = "Hair";
+			IPXNode Arms = PEStaticBuilder.Pmx.Node();
+			Arms.Name = "腕";
+			Arms.NameE = "Arms";
+			IPXNode Fingers = PEStaticBuilder.Pmx.Node();
+			Fingers.Name = "指";
+			Fingers.NameE = "Fingers";
+			IPXNode LowerBody = PEStaticBuilder.Pmx.Node();
+			LowerBody.Name = "体(下)";
+			LowerBody.NameE = "LowerBody";
+			IPXNode Legs = PEStaticBuilder.Pmx.Node();
+			Legs.Name = "足";
+			Legs.NameE = "Legs";
+			IPXNode Etc = PEStaticBuilder.Pmx.Node();
+			Etc.Name = "その他";
+			Etc.NameE = "Etc";
+
+			nodes.Add(Center);
+			nodes.Add(IK);
+			nodes.Add(UpperBody);
+			nodes.Add(Hair);
+			nodes.Add(Arms);
+			nodes.Add(Fingers);
+			nodes.Add(LowerBody);
+			nodes.Add(Legs);
+			nodes.Add(Etc);
+		}
+
+		private void run_mat_default_setting(ModelObject model_object)
         {
             foreach (IPXMaterial material in model_object.materials)
             {
@@ -290,6 +407,7 @@ namespace PMXEP536{
         {
             model_object.addBoneIfNotExists("両目");
             IPXBone Eyes = model_object.getBoneByName("両目");
+            Eyes.Parent = model_object.getBoneByName("頭");
             Eyes.Position = new V3(0.0f, 21.0f, -0.7f);
             Eyes.ToOffset = new V3(0.0f, 0.0f, -0.5f);
 
@@ -326,19 +444,19 @@ namespace PMXEP536{
                 LegIK.IK.LoopCount = 40;
                 LegIK.IK.Angle = Util.CalcToRadian(114.5916f);
                 LegIK.IK.Links.Clear();
-                
-                IPXIKLink UpperLegIKLink = (IPXIKLink)PEStaticBuilder.Pmx.IKLink();
-                UpperLegIKLink.Bone = UpperLeg;
-                UpperLegIKLink.IsLimit = true;
-                UpperLegIKLink.Low  = new V3(
-                    Util.CalcToRadian(-180.0f), 0.0f, 0.0f);
-                UpperLegIKLink.High = new V3(
-                    Util.CalcToRadian(-0.5f), 0.0f, 0.0f);
-                LegIK.IK.Links.Add(UpperLegIKLink);
 
-                IPXIKLink LowerLegIKLink = (IPXIKLink)PEStaticBuilder.Pmx.IKLink();
-                LowerLegIKLink.Bone = LowerLeg;
-                LegIK.IK.Links.Add(LowerLegIKLink);
+				IPXIKLink LowerLegIKLink = (IPXIKLink)PEStaticBuilder.Pmx.IKLink();
+				LowerLegIKLink.Bone = LowerLeg;
+				LowerLegIKLink.IsLimit = true;
+				LowerLegIKLink.Low = new V3(
+					Util.CalcToRadian(-180.0f), 0.0f, 0.0f);
+				LowerLegIKLink.High = new V3(
+					Util.CalcToRadian(-0.5f), 0.0f, 0.0f);
+				LegIK.IK.Links.Add(LowerLegIKLink);
+
+				IPXIKLink UpperLegIKLink = (IPXIKLink)PEStaticBuilder.Pmx.IKLink();
+                UpperLegIKLink.Bone = UpperLeg;
+                LegIK.IK.Links.Add(UpperLegIKLink);
                 _console.debug(str+"足IK設定完了");
 
                 ToeIK.Position = Toe.Position.Clone();
