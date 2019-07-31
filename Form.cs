@@ -110,6 +110,25 @@ namespace PMXEP536{
                     this.bone_sort.Checked = false;
                     _console.info("完了：" + proc_name);
                 }
+                if (this.bone_visible.Checked)
+				{
+                    string proc_name = this.bone_visible.Text;
+					_console.info("開始：" + proc_name);
+                    run_bone_visible(model_object);
+                    this.bone_visible.Checked = false;
+					_console.info("完了：" + proc_name);
+
+				}
+
+				if (this.bone_setup_view.Checked)
+				{
+					string proc_name = this.bone_setup_view.Text;
+					_console.info("開始：" + proc_name);
+					run_bone_setup_view(model_object);
+					this.bone_setup_view.Checked = false;
+					_console.info("完了：" + proc_name);
+
+				}
                 //■モーフ
                 if (this.mo_setup_view.Checked)
                 {
@@ -194,9 +213,13 @@ namespace PMXEP536{
 			model_object.addBoneIfNotExists("下半身");
 			IPXBone LowerBody = model_object.getBoneByName("下半身");
 			model_object.addBoneIfNotExists("上半身");
-			IPXBone UpperBody = model_object.getBoneByName("上半身");
-			LowerBody.Parent = UpperBody;
+            IPXBone UpperBody = model_object.getBoneByName("上半身");
+            IPXBone Center = model_object.getBoneByName("センター");
+            LowerBody.Parent = Center;
 			LowerBody.Position = UpperBody.Position.Clone();
+            LowerBody.ToBone = null;
+            LowerBody.IsRotation = true;
+            LowerBody.IsTranslation = false;
 			LowerBody.ToOffset = new V3(0.0f,-1.0f,0.0f);
 			_console.debug("Hips->下半身変換 完了");
 
@@ -296,9 +319,8 @@ namespace PMXEP536{
             {
                 string line = BONE_MAP.ReadLine();
                 string[] values = line.Split(',');
-                if (Util.isInt(values[0]) && "-" != values[1])
+                if (Util.isInt(values[0]))
                 {
- //                   _console.debug("name_map.Add:" + values[1]);
                     name_map.Add(values[1], new StringBuilder().Append(int.Parse(values[0]).ToString("D4"))
                         .Append("_").Append(values[1]).ToString());
                 }
@@ -333,7 +355,137 @@ namespace PMXEP536{
             }
         }
 
-        private void run_mat_default_setting(ModelObject model_object)
+
+        private void run_bone_visible(ModelObject model_object) 
+        {
+            StreamReader BONE_MAP = new StreamReader(@"_plugin/User/BoneMap.csv",
+                   System.Text.Encoding.GetEncoding("UTF-8"));//No,PMX,PMX_en,Humanoid,VRM
+            //rename
+            IDictionary<string, string> visible_map = new Dictionary<string, string>();
+            IList<string> list = new List<string>();
+
+            while (!BONE_MAP.EndOfStream) {
+                string line = BONE_MAP.ReadLine();
+                string[] values = line.Split(',');
+                if (Util.isInt(values[0])) {
+                    visible_map.Add(values[1], values[7]);
+                }
+            }
+            BONE_MAP.Close();
+            foreach (IPXBone bone in model_object.bones) {
+                String name = bone.Name;
+                if (visible_map.ContainsKey(name)) {
+                    bone.Visible = bool.Parse(visible_map[name]);
+                }else if(name.Contains("先")){
+                    bone.Visible = false;
+                }
+            }
+        }
+
+		private void run_bone_setup_view(ModelObject model_object)
+		{
+			IPXNode root_node = model_object.nodes_root;
+			IList<IPXNode> nodes = model_object.nodes_bone;
+            root_node.Items.Clear();
+			nodes.Clear();
+			IPXNode Center = PEStaticBuilder.Pmx.Node();
+			Center.Name = "センター";
+			Center.NameE = "Center";
+			IPXNode IK = PEStaticBuilder.Pmx.Node();
+            IK.Name = "ＩＫ";
+			IK.NameE = "IK";
+			IPXNode UpperBody = PEStaticBuilder.Pmx.Node();
+			UpperBody.Name = "体(上)";
+			UpperBody.NameE = "UpperBody";
+			IPXNode Hair = PEStaticBuilder.Pmx.Node();
+			Hair.Name = "髪";
+			Hair.NameE = "Hair";
+			IPXNode Arms = PEStaticBuilder.Pmx.Node();
+			Arms.Name = "腕";
+			Arms.NameE = "Arms";
+			IPXNode Fingers = PEStaticBuilder.Pmx.Node();
+			Fingers.Name = "指";
+			Fingers.NameE = "Fingers";
+			IPXNode LowerBody = PEStaticBuilder.Pmx.Node();
+			LowerBody.Name = "体(下)";
+			LowerBody.NameE = "LowerBody";
+			IPXNode Legs = PEStaticBuilder.Pmx.Node();
+			Legs.Name = "足";
+			Legs.NameE = "Legs";
+			IPXNode Etc = PEStaticBuilder.Pmx.Node();
+			Etc.Name = "その他";
+			Etc.NameE = "Etc";
+
+            StreamReader BONE_MAP = new StreamReader(@"_plugin/User/BoneMap.csv",
+                System.Text.Encoding.GetEncoding("UTF-8"));//No,PMX,PMX_en,Humanoid,VRM
+            //rename
+            IDictionary<string, string> name_map = new Dictionary<string, string>();
+            IList<string> list = new List<string>();
+
+            while (!BONE_MAP.EndOfStream)
+            {
+                string line = BONE_MAP.ReadLine();
+                string[] values = line.Split(',');
+                if (Util.isInt(values[0]))
+                {
+                    name_map.Add(values[1], values[6]);
+                }
+            }
+            BONE_MAP.Close();
+
+            foreach (IPXBone bone in model_object.bones) {
+                String name = bone.Name;
+
+                if (name_map.ContainsKey(name)) {
+                    switch (name_map[name]) {
+                        case "-":
+                            break;
+                        case "Root":
+                            root_node.Items.Add(PEStaticBuilder.Pmx.BoneNodeItem(bone));
+                            break;
+                        case "センター":
+                            Center.Items.Add(PEStaticBuilder.Pmx.BoneNodeItem(bone));
+                            break;
+                        case "ＩＫ":
+                            IK.Items.Add(PEStaticBuilder.Pmx.BoneNodeItem(bone));
+                            break;
+                        case "体(上)":
+                            UpperBody.Items.Add(PEStaticBuilder.Pmx.BoneNodeItem(bone));
+                            break;
+                        case "腕":
+                            Arms.Items.Add(PEStaticBuilder.Pmx.BoneNodeItem(bone));
+                            break;
+                        case "指":
+                            Fingers.Items.Add(PEStaticBuilder.Pmx.BoneNodeItem(bone));
+                            break;
+                        case "体(下)":
+                            LowerBody.Items.Add(PEStaticBuilder.Pmx.BoneNodeItem(bone));
+                            break;
+                        case "足":
+                            Legs.Items.Add(PEStaticBuilder.Pmx.BoneNodeItem(bone));
+                            break;
+                    }
+                } else if(name.EndsWith("先")){
+                    continue;
+                } else if ((name.Contains("髪") || name.ToLower().Contains("hair"))) {
+                    Hair.Items.Add(PEStaticBuilder.Pmx.BoneNodeItem(bone));
+                } else {
+                    Etc.Items.Add(PEStaticBuilder.Pmx.BoneNodeItem(bone));
+                }
+            }
+
+			nodes.Add(Center);
+			nodes.Add(IK);
+			nodes.Add(UpperBody);
+			nodes.Add(Hair);
+			nodes.Add(Arms);
+			nodes.Add(Fingers);
+			nodes.Add(LowerBody);
+			nodes.Add(Legs);
+			nodes.Add(Etc);
+		}
+
+		private void run_mat_default_setting(ModelObject model_object)
         {
             foreach (IPXMaterial material in model_object.materials)
             {
@@ -466,6 +618,16 @@ namespace PMXEP536{
 
         private void run_test_invalid_value(ModelObject model_object)
         {
+            _console.debug("ボーン順の検証：");
+            IList<IPXBone> bones = model_object.bones;
+            foreach (IPXBone bone in bones) {
+                if (bones.IndexOf(bone.Parent) > bones.IndexOf(bone)) {
+                    throw new System.Exception(
+                        new StringBuilder().Append("子：").Append(bone.Name).Append("->親：")
+                        .Append(bone.Parent.Name).Append("のボーン順が不正です").ToString());
+                }
+            }
+            _console.info("ボーン順の検証：OK");
         }
         
         //モデル・画面を更新を行います

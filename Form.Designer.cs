@@ -52,6 +52,8 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.bone_add_stdbone = new System.Windows.Forms.CheckBox();
             this.bone_sort = new System.Windows.Forms.CheckBox();
+            this.bone_setup_view = new System.Windows.Forms.CheckBox();
+            this.bone_visible = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // button1
@@ -97,7 +99,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("MS UI Gothic", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label2.Location = new System.Drawing.Point(272, 104);
+            this.label2.Location = new System.Drawing.Point(272, 96);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(115, 16);
             this.label2.TabIndex = 2;
@@ -120,7 +122,7 @@
             this.bone_setup_eyes.AutoSize = true;
             this.bone_setup_eyes.FlatAppearance.CheckedBackColor = System.Drawing.Color.White;
             this.bone_setup_eyes.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.bone_setup_eyes.Location = new System.Drawing.Point(288, 128);
+            this.bone_setup_eyes.Location = new System.Drawing.Point(288, 120);
             this.bone_setup_eyes.Name = "bone_setup_eyes";
             this.bone_setup_eyes.Size = new System.Drawing.Size(142, 20);
             this.bone_setup_eyes.TabIndex = 1;
@@ -141,7 +143,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("MS UI Gothic", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label4.Location = new System.Drawing.Point(536, 168);
+            this.label4.Location = new System.Drawing.Point(536, 160);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(78, 16);
             this.label4.TabIndex = 2;
@@ -164,7 +166,7 @@
             this.test_invalid_value.AutoSize = true;
             this.test_invalid_value.FlatAppearance.CheckedBackColor = System.Drawing.Color.White;
             this.test_invalid_value.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.test_invalid_value.Location = new System.Drawing.Point(552, 192);
+            this.test_invalid_value.Location = new System.Drawing.Point(552, 184);
             this.test_invalid_value.Name = "test_invalid_value";
             this.test_invalid_value.Size = new System.Drawing.Size(120, 20);
             this.test_invalid_value.TabIndex = 1;
@@ -176,7 +178,7 @@
             this.bone_setup_legIK.AutoSize = true;
             this.bone_setup_legIK.FlatAppearance.CheckedBackColor = System.Drawing.Color.White;
             this.bone_setup_legIK.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.bone_setup_legIK.Location = new System.Drawing.Point(288, 160);
+            this.bone_setup_legIK.Location = new System.Drawing.Point(288, 152);
             this.bone_setup_legIK.Name = "bone_setup_legIK";
             this.bone_setup_legIK.Size = new System.Drawing.Size(102, 20);
             this.bone_setup_legIK.TabIndex = 1;
@@ -289,12 +291,36 @@
             this.bone_sort.AutoSize = true;
             this.bone_sort.FlatAppearance.CheckedBackColor = System.Drawing.Color.White;
             this.bone_sort.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.bone_sort.Location = new System.Drawing.Point(288, 192);
+            this.bone_sort.Location = new System.Drawing.Point(288, 184);
             this.bone_sort.Name = "bone_sort";
             this.bone_sort.Size = new System.Drawing.Size(101, 20);
             this.bone_sort.TabIndex = 1;
             this.bone_sort.Text = "ボーンソート";
             this.bone_sort.UseVisualStyleBackColor = true;
+            // 
+            // bone_setup_view
+            // 
+            this.bone_setup_view.AutoSize = true;
+            this.bone_setup_view.FlatAppearance.CheckedBackColor = System.Drawing.Color.White;
+            this.bone_setup_view.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.bone_setup_view.Location = new System.Drawing.Point(288, 248);
+            this.bone_setup_view.Name = "bone_setup_view";
+            this.bone_setup_view.Size = new System.Drawing.Size(145, 20);
+            this.bone_setup_view.TabIndex = 1;
+            this.bone_setup_view.Text = "ボーン表示枠設定";
+            this.bone_setup_view.UseVisualStyleBackColor = true;
+            // 
+            // bone_visible
+            // 
+            this.bone_visible.AutoSize = true;
+            this.bone_visible.FlatAppearance.CheckedBackColor = System.Drawing.Color.White;
+            this.bone_visible.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.bone_visible.Location = new System.Drawing.Point(288, 216);
+            this.bone_visible.Name = "bone_visible";
+            this.bone_visible.Size = new System.Drawing.Size(129, 20);
+            this.bone_visible.TabIndex = 1;
+            this.bone_visible.Text = "ボーン表示設定";
+            this.bone_visible.UseVisualStyleBackColor = true;
             // 
             // Form
             // 
@@ -315,6 +341,8 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.test_invalid_value);
+            this.Controls.Add(this.bone_visible);
+            this.Controls.Add(this.bone_setup_view);
             this.Controls.Add(this.mo_setup_view);
             this.Controls.Add(this.bone_sort);
             this.Controls.Add(this.bone_setup_legIK);
@@ -358,5 +386,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.CheckBox bone_add_stdbone;
         private System.Windows.Forms.CheckBox bone_sort;
-    }
+		private System.Windows.Forms.CheckBox bone_setup_view;
+        private System.Windows.Forms.CheckBox bone_visible;
+	}
 }
